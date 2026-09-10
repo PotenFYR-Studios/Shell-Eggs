@@ -140,7 +140,7 @@ function Footer() {
     <footer className="border-t border-slate-800/60 py-12">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center">
         <p className="text-sm text-slate-500">
-          Crafted by PotenFYR Studios - shells are dual-use tools; deploy only on systems you own or are authorized
+          Crafted by PotenFYR Studios · Apache-2.0 + Commons Clause - shells are dual-use tools; deploy only on systems you own or are authorized
           to test.
         </p>
         <div className="flex gap-4 text-sm">

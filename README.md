@@ -253,7 +253,7 @@ and CA profiles exist precisely because defaults matter: keys-only, principal pi
 
 ## 📜 License
 
-[MIT](LICENSE) - **Crafted with passion by [PotenFYR Studios](https://github.com/PotenFYR-Studios)**
+[Apache-2.0 + Commons Clause](LICENSE) — free to fork, modify, and use, and to build products or services around, but not to sell as a product - **Crafted with passion by [PotenFYR Studios](https://github.com/PotenFYR-Studios)**
 
 _Support & Inquiries: [support@potenfyr.in](mailto:support@potenfyr.in)_
 
