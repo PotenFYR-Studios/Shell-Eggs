@@ -15,3 +15,6 @@ dist/
 .vscode/
 .idea/
 *.swp
+__pycache__/
+*.pyc
+tsconfig.tsbuildinfo
