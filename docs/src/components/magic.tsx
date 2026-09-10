@@ -6,34 +6,39 @@ import { useRef } from "react";
 
 export function useTypewriter(words: string[], speed = 65, pause = 1500) {
   const [text, setText] = useState("");
-  const [word, setWord] = useState(0);
+  // Identity-safe: callers may pass inline arrays; we must not restart the
+  // effect on every render or the typewriter never progresses ("stuck at ss").
+  const wordsRef = useRef(words);
+  wordsRef.current = words;
+  const state = useRef({ word: 0, i: 0, deleting: false });
+  const [wordIdx, setWordIdx] = useState(0);
   useEffect(() => {
-    const target = words[word % words.length];
-    let i = 0;
-    let deleting = false;
     let timer: ReturnType<typeof setTimeout>;
     const tick = () => {
-      if (!deleting) {
-        i++;
-        setText(target.slice(0, i));
-        if (i === target.length) {
-          deleting = true;
+      const s = state.current;
+      const target = wordsRef.current[s.word % wordsRef.current.length] ?? "";
+      if (!s.deleting) {
+        s.i++;
+        setText(target.slice(0, s.i));
+        if (s.i >= target.length && target.length > 0) {
+          s.deleting = true;
           timer = setTimeout(tick, pause);
           return;
         }
       } else {
-        i--;
-        setText(target.slice(0, i));
-        if (i === 0) {
-          deleting = false;
-          setWord((w) => (w + 1) % words.length);
+        s.i--;
+        setText(target.slice(0, s.i));
+        if (s.i <= 0) {
+          s.deleting = false;
+          s.word = (s.word + 1) % Math.max(wordsRef.current.length, 1);
+          setWordIdx(s.word);
         }
       }
-      timer = setTimeout(tick, deleting ? speed / 2 : speed);
+      timer = setTimeout(tick, s.deleting ? speed / 2 : speed);
     };
     timer = setTimeout(tick, 300);
     return () => clearTimeout(timer);
-  }, [word, words, speed, pause]);
+  }, [wordIdx, speed, pause]);
   return text;
 }
 
@@ -126,15 +131,26 @@ const BOOT_LINES = [
 
 export function BootTerminal() {
   const [lines, setLines] = useState<string[]>([]);
+  const [done, setDone] = useState(false);
   useEffect(() => {
     let i = 0;
     const t = setInterval(() => {
       i++;
       setLines(BOOT_LINES.slice(0, i));
-      if (i >= BOOT_LINES.length) clearInterval(t);
+      if (i >= BOOT_LINES.length) {
+        clearInterval(t);
+        setDone(true);
+      }
     }, 420);
     return () => clearInterval(t);
   }, []);
+  // After boot completes, animate a typed secondary command instead of a
+  // blinking idle caret (same "stuck" feel we fixed in the typewriter).
+  const tail = useTypewriter(
+    ["ss -tlpn | grep sshd", "tmux attach -t shell-eggs", "cat .sh-users/credentials"],
+    55,
+    2200,
+  );
   return (
     <BeamCard className="p-0">
       <div className="flex items-center gap-2 border-b border-slate-700/40 px-4 py-3">
@@ -155,7 +171,13 @@ export function BootTerminal() {
             {l}
           </motion.div>
         ))}
-        <span className="caret" />
+        {done && (
+          <div className="text-fuchsia-300">
+            $ {tail}
+            <span className="caret" />
+          </div>
+        )}
+        {!done && <span className="caret" />}
       </pre>
     </BeamCard>
   );

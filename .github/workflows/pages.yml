@@ -37,6 +37,14 @@ jobs:
         working-directory: docs
         run: bun install --frozen-lockfile || bun install
 
+      - name: Hybrid domain (custom CNAME if configured, else github.io)
+        working-directory: docs
+        env:
+          CUSTOM_DOMAIN: ${{ secrets.CUSTOM_DOMAIN }}
+        run: |
+          chmod +x cname-setup.sh
+          ./cname-setup.sh
+
       - name: Sync live data from repo (auto-update source of truth)
         working-directory: docs
         run: |

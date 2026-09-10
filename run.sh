@@ -180,13 +180,20 @@ resolve_selection() { # fills SHELL_ENABLED_IDS + SHELL_START_FN
         root_need=$(reg_field "${id}" 4)
 
         # Port policy (panels + docker):
-        #   1st ported shell ALWAYS binds the panel-assigned SERVER_PORT.
-        #   next ported shells consume SHELL_EXTRA_PORTS positionally, then
+        #   The PRIMARY inbound port is always the server's assigned port
+        #   (SERVER_PORT / P_SERVER_PORT). Catalog defaults like 4444/5555 are
+        #   only fallbacks for bare-docker runs without SERVER_PORT set -
+        #   panel-allocated ports take absolute priority because 22/23/4444
+        #   are rarely allocatable.
+        #   Extra ported shells consume SHELL_EXTRA_PORTS positionally, then
         #   auto-allocate above the primary port.
         local bind
         if [ "${port0}" != "0" ]; then
             if [ "${first_port_set}" = "0" ]; then
                 bind="${SERVER_PORT:-${port0}}"
+                if [ -n "${SERVER_PORT:-}" ]; then
+                    log "${id}: binding the server's primary port ${SERVER_PORT} (panel-assigned)."
+                fi
                 first_port_set=1
             elif [ "${#extra_ports[@]}" -gt 0 ]; then
                 bind="${extra_ports[0]}"
