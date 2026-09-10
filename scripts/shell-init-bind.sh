@@ -19,9 +19,8 @@ ensure_certs() { # ensure_certs <basename-prefix>
         openssl req -x509 -newkey rsa:2048 -sha256 -days 825 -nodes \
             -keyout "${key}" -out "${crt}" -subj "/CN=shell-eggs" >/dev/null 2>&1
         chmod 600 "${key}"
-        ok "Generated self-signed TLS pair: ${dir}/${1}.{key,crt}"
+        log "Generated self-signed TLS pair: ${dir}/${1}.{key,crt}"
     fi
-    printf '%s %s\n' "${key}" "${crt}"
 }
 
 bind_register() { # bind_register <id> <guide>
@@ -73,9 +72,12 @@ COMPONENTS:
 # ---------------------------------------------------------------- TLS bind
 init_openssl_bind() {
     local port="${SHELL_BIND_PORT:-5555}"
-    local certfiles key crt
-    certfiles=$(ensure_certs "bind") || return 1
-    read -r key crt <<< "${certfiles}"
+    local key="${SERVER_DIR}/certs/bind.key" crt="${SERVER_DIR}/certs/bind.crt"
+    ensure_certs "bind"
+    if [ ! -f "${key}" ] || [ ! -f "${crt}" ]; then
+        fail "cert generation failed (key=${key} crt=${crt})"
+        return 1
+    fi
     pkg_install socat || true
     log "Binding TLS shell on port ${port}..."
     setsid socat "OPENSSL-LISTEN:${port},reuseaddr,fork,cert=${crt},key=${key},verify=0" \
