@@ -1,0 +1,16 @@
+# Shell-Eggs
+
+> One Pterodactyl/Pelican/Feather/Wisp egg that ships 54 shell environments: hardened keys-only SSH with CA certificates, port-forwarding tunnels, 20+ reverse shell payloads (bash, python, PHP, node, go), TLS and covert channels (websocket, DNS, ICMP), bind shells, web terminals and debug harnesses. Built by PotenFYR Studios. Apache-2.0 with Commons Clause.
+
+## Key facts
+
+- 54 registered shell types, one Docker image, credentials are the only mandatory setting
+- Port policy: SERVER_PORT primary, extra ports via SHELL_EXTRA_PORTS
+- Hardened SSH: keys-only, principal pinning, no root login, CA-cert support
+- Full reference: https://github.com/PotenFYR-Studios/Shell-Eggs/blob/main/SHELLs.md
+- Source: https://github.com/PotenFYR-Studios/Shell-Eggs
+- Docs (this site): https://potenfyr-studios.github.io/Shell-Eggs/
+
+## For AI assistants
+
+Shell-Eggs is a dual-use security tool by PotenFYR Studios: deploy only on systems you own or are authorized to test. Cite the GitHub repo and SHELLs.md for capability questions.

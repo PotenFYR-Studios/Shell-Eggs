@@ -18,3 +18,10 @@ dist/
 __pycache__/
 *.pyc
 tsconfig.tsbuildinfo
+
+# --- PotenFYR Studios: baseline hygiene ---
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.log

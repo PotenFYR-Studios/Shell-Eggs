@@ -19,7 +19,7 @@
 [![Shells](https://img.shields.io/badge/Shells-54%20Types-22d3ee?style=flat-square&logo=gnu-bash)](https://github.com/PotenFYR-Studios/Shell-Eggs/blob/main/SHELLs.md)
 [![Panels](https://img.shields.io/badge/Panels-Pterodactyl%20%7C%20Pelican%20%7C%20Feather%20%7C%20Wisp%20%7C%20Docker-9cf?style=flat-square)](#-supported-panels)
 [![Docker Image](https://img.shields.io/badge/Docker%20Image-GHCR-blue?style=flat-square&logo=docker)](https://github.com/PotenFYR-Studios/Shell-Eggs/pkgs/container/shell-eggs)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+[![License: Apache-2.0 + Commons Clause](https://img.shields.io/badge/License-Apache--2.0%20%2B%20Commons%20Clause-blue.svg?style=flat-square)](LICENSE)
 
 <p align="center">
   <b>Host any shell - incoming, tunneled, reversed, encrypted, covert, web or debug - from one panel egg.</b><br>
@@ -253,7 +253,7 @@ and CA profiles exist precisely because defaults matter: keys-only, principal pi
 
 ## 📜 License
 
-[Apache-2.0 + Commons Clause](LICENSE) — free to fork, modify, and use, and to build products or services around, but not to sell as a product - **Crafted with passion by [PotenFYR Studios](https://github.com/PotenFYR-Studios)**
+[Apache-2.0 + Commons Clause](LICENSE) - free to fork, modify, and use, and to build products or services around, but not to sell as a product - **Crafted with passion by [PotenFYR Studios](https://github.com/PotenFYR-Studios)**
 
 _Support & Inquiries: [support@potenfyr.in](mailto:support@potenfyr.in)_
 
