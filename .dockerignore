@@ -1,0 +1,18 @@
+# GitHub
+.git/
+.gitignore
+
+# CI
+.github/
+
+# Tests
+tests/
+
+# Docs build artifacts (site dist is built in CI)
+docs/node_modules/
+docs/dist/
+docs/bun.lockb
+
+# Local junk
+*.log
+.DS_Store

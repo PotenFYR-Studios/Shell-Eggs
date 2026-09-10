@@ -1,0 +1,17 @@
+# runtime secrets/credentials never commit-style state lives here, but belt+braces
+.env
+.sh-users/
+.sh-autostart
+certs/
+payloads/
+logs/
+www/
+
+# node/bun
+node_modules/
+dist/
+
+# editors
+.vscode/
+.idea/
+*.swp
