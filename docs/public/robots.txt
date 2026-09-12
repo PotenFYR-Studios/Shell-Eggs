@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://potenfyr-studios.github.io/Shell-Eggs/sitemap.xml
+Sitemap: https://shell-eggs.docs.potenfyr.in/sitemap.xml
 
 # AI / answer-engine crawlers: explicitly welcome (2026 GEO best practice)
 User-agent: GPTBot
@@ -28,4 +28,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-# LLM guidance: https://potenfyr-studios.github.io/Shell-Eggs/llms.txt
+# LLM guidance: https://shell-eggs.docs.potenfyr.in/llms.txt
