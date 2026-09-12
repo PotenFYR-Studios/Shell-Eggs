@@ -658,7 +658,7 @@ export const EGG_VARIABLES = [
     "env": "EGG_UPDATE_URL",
     "name": "Egg Update URL",
     "description": "Check on startup and self-update the launcher when the upstream egg changed (raw GitHub egg JSON or entrypoint URL).",
-    "defaultValue": "https://raw.githubusercontent.com/PotenFYR-Studios/Shell-Eggs/main/egg-shell-multi.json",
+    "defaultValue": "https://raw.githubusercontent.com/PotenFYR-Studios/Shell-Eggs/master/egg-shell-multi.json",
     "mandatory": false
   },
   {

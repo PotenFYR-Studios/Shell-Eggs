@@ -18,7 +18,7 @@ umask 077
 
 # ---------------------------------------------------------------- constants
 SHELL_EGGS_VERSION="1.0.0"
-EGG_REPO_RAW="https://raw.githubusercontent.com/PotenFYR-Studios/Shell-Eggs/main"
+EGG_REPO_RAW="https://raw.githubusercontent.com/PotenFYR-Studios/Shell-Eggs/master"
 AUTOSTART_MARKER=".sh-autostart"
 ENV_FILE="${ENV_FILE:-$PWD/.env}"
 # Runtime scripts: panel installs put them in the server dir; the ghcr image

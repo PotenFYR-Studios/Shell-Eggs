@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, useInView, useSpring, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 /* ---------------------------------- hooks --------------------------------- */
 
@@ -102,8 +102,7 @@ export function ShimmerButton({ children, href }: { children: React.ReactNode; h
   return (
     <a
       href={href}
-      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold text-slate-950 transition-transform hover:scale-[1.03] active:scale-[0.98]"
-      style={{ background: "linear-gradient(110deg, #22d3ee, #a78bfa 45%, #f472b6)" }}
+      className="btn btn-primary group relative inline-flex items-center gap-2 overflow-hidden"
     >
       <span className="absolute inset-0 -translate-x-full bg-white/30 blur-md transition-transform duration-700 group-hover:translate-x-full" />
       <span className="relative">{children}</span>
@@ -130,9 +129,14 @@ const BOOT_LINES = [
 ];
 
 export function BootTerminal() {
-  const [lines, setLines] = useState<string[]>([]);
+  // Initial state = full boot log on BOTH server and client renders: the
+  // prerendered HTML carries the whole terminal (crawlers see it) and client
+  // hydration matches exactly. The layout effect then clears and replays the
+  // boot animation before first paint.
+  const [lines, setLines] = useState<string[]>(BOOT_LINES);
   const [done, setDone] = useState(false);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    setLines([]);
     let i = 0;
     const t = setInterval(() => {
       i++;
@@ -153,31 +157,35 @@ export function BootTerminal() {
   );
   return (
     <BeamCard className="p-0">
-      <div className="flex items-center gap-2 border-b border-slate-700/40 px-4 py-3">
+      <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: "1px solid var(--line-light)" }}>
         <span className="h-3 w-3 rounded-full bg-rose-400/80" />
         <span className="h-3 w-3 rounded-full bg-amber-300/80" />
         <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-        <span className="ml-3 text-xs text-slate-400">container console</span>
+        <span className="ml-3 text-xs" style={{ color: "var(--muted)" }}>
+          container console
+        </span>
       </div>
-      <pre className="min-h-[320px] overflow-x-auto p-5 text-[12.5px] leading-6 text-slate-300">
-        {lines.map((l, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.25 }}
-            className={l.startsWith("</>") ? "text-cyan-300" : l.startsWith("$") ? "text-fuchsia-300" : ""}
-          >
-            {l}
-          </motion.div>
-        ))}
-        {done && (
-          <div className="text-fuchsia-300">
-            $ {tail}
-            <span className="caret" />
-          </div>
-        )}
-        {!done && <span className="caret" />}
+      <pre className="min-h-[320px] p-5" data-lang="console">
+        <code>
+          {lines.map((l, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.25 }}
+              style={{ color: l.startsWith("</>") ? "#c4b5fd" : l.startsWith("$") ? "#f9a8d4" : "#dfe2ef" }}
+            >
+              {l}
+            </motion.div>
+          ))}
+          {done && (
+            <div style={{ color: "#f9a8d4" }}>
+              $ {tail}
+              <span className="caret" />
+            </div>
+          )}
+          {!done && <span className="caret" />}
+        </code>
       </pre>
     </BeamCard>
   );

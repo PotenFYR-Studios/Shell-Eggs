@@ -1,0 +1,24 @@
+name: Security Concern
+description: Report a potential security issue (not a vulnerability; for vulnerabilities use the private email).
+title: "[security] "
+labels: ["security"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For confirmed vulnerabilities, please email support@potenfyr.in instead.
+        This template is for security discussions, hardening ideas, and non-critical findings.
+  - type: textarea
+    id: concern
+    attributes:
+      label: Describe the concern
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Potential impact
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Suggested mitigation

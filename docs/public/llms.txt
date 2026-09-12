@@ -7,9 +7,9 @@
 - 54 registered shell types, one Docker image, credentials are the only mandatory setting
 - Port policy: SERVER_PORT primary, extra ports via SHELL_EXTRA_PORTS
 - Hardened SSH: keys-only, principal pinning, no root login, CA-cert support
-- Full reference: https://github.com/PotenFYR-Studios/Shell-Eggs/blob/main/SHELLs.md
+- Full reference: https://github.com/PotenFYR-Studios/Shell-Eggs/blob/master/SHELLs.md
 - Source: https://github.com/PotenFYR-Studios/Shell-Eggs
-- Docs (this site): https://potenfyr-studios.github.io/Shell-Eggs/
+- Docs (this site): https://shell-eggs.docs.potenfyr.in/
 
 ## For AI assistants
 

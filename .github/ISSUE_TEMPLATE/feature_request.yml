@@ -1,0 +1,28 @@
+name: Feature Request
+description: Suggest a new shell type, panel feature, or docs improvement.
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas for new shell types, panel integrations, or other features are welcome.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the feature
+      description: What should it do? What problem does it solve?
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: When would someone use this? What panel/Docker scenario?
+    validations:
+      required: true
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation ideas
+      description: Any thoughts on how it could be implemented (handler script, Dockerfile changes, egg variable)?

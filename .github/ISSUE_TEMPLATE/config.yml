@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discord Support
+    url: https://discord.com/invite/zUaN2FPBec
+    about: Chat with the community on Discord.
+  - name: Security Report
+    url: mailto:support@potenfyr.in
+    about: Report a security vulnerability privately.
+  - name: SHELLs.md Reference
+    url: https://github.com/PotenFYR-Studios/Shell-Eggs/blob/master/SHELLs.md
+    about: The complete shell reference with connection commands.
+  - name: Docs Site
+    url: https://potenfyr-studios.github.io/Shell-Eggs/
+    about: Full documentation with install guide, variables and per-family shell pages.

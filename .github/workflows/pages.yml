@@ -13,8 +13,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -24,9 +22,11 @@ jobs:
   build:
     name: Build Vite site (Bun)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -36,14 +36,6 @@ jobs:
       - name: Install dependencies
         working-directory: docs
         run: bun install --frozen-lockfile || bun install
-
-      - name: Hybrid domain (custom CNAME if configured, else github.io)
-        working-directory: docs
-        env:
-          CUSTOM_DOMAIN: ${{ secrets.CUSTOM_DOMAIN }}
-        run: |
-          chmod +x cname-setup.sh
-          ./cname-setup.sh
 
       - name: Sync live data from repo (auto-update source of truth)
         working-directory: docs
@@ -58,10 +50,10 @@ jobs:
           VITE_REPO: PotenFYR-Studios/Shell-Eggs
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: docs/dist
 
@@ -69,10 +61,13 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
