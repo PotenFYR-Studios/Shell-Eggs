@@ -68,17 +68,34 @@ export SHELL_TYPE SHELL_USERS SHELL_PASSWORDS AUTO_GENERATE_CREDENTIALS SHELL_MO
        GIT_REPO_URL GIT_BRANCH GIT_TOKEN GIT_ARCHIVE_ON_UPDATE GIT_AUTO_UPDATE GIT_POLL_SECONDS
 
 # ---------------------------------------------------------------- logging
-if [ "${CLI_THEME}" = "classic" ]; then
-    log()  { printf '[PotenFYR] %s\n' "$*"; }
-    ok()   { printf '[PotenFYR] OK: %s\n' "$*"; }
-    warn() { printf '[PotenFYR] WARN: %s\n' "$*"; }
-    fail() { printf '[PotenFYR] FAIL: %s\n' "$*"; }
+# Same console theme family as Multi-Minecraft / Multi-Language eggs:
+# `</> shell-eggs` prefix with ▸/✔/⚠/✖/ℹ markers, [PotenFYR] fallback for the
+# classic theme and non-TTY boots. `fail` is kept as an alias of `error`
+# because the launcher scripts and user hooks call it.
+C_RESET=$'\033[0m'
+C_BOLD=$'\033[1m'
+C_DIM=$'\033[2m'
+C_CYAN=$'\033[36m'
+C_LIME=$'\033[92m'
+C_GOLD=$'\033[93m'
+C_GREEN=$'\033[32m'
+C_YELLOW=$'\033[33m'
+C_RED=$'\033[31m'
+C_BLUE=$'\033[34m'
+if [ "${CLI_THEME}" = "classic" ] || [ "${TTY_INTERACTIVE}" = "0" ]; then
+    log()   { printf "%b %b\n" "${C_CYAN}${C_BOLD}[PotenFYR]${C_RESET}" "$*"; }
+    ok()    { printf "%b %b\n" "${C_GREEN}${C_BOLD}[PotenFYR][✓]${C_RESET}" "$*"; }
+    warn()  { printf "%b %b\n" "${C_YELLOW}${C_BOLD}[PotenFYR][!]${C_RESET}" "${C_YELLOW}$*${C_RESET}"; }
+    error() { printf "%b %b\n" "${C_RED}${C_BOLD}[PotenFYR][✗]${C_RESET}" "${C_RED}$*${C_RESET}"; }
+    info()  { printf "%b %b\n" "${C_BLUE}${C_BOLD}[PotenFYR][i]${C_RESET}" "$*"; }
 else
-    log()  { printf '\033[2m</>\033[0m \033[36mshell-eggs\033[0m %s\n' "$*"; }
-    ok()   { printf '\033[2m</>\033[0m \033[36mshell-eggs\033[0m %s\n' "$*"; }
-    warn() { printf '\033[2m</>\033[0m \033[33mshell-eggs\033[0m \033[33mWARN:\033[0m %s\n' "$*"; }
-    fail() { printf '\033[2m</>\033[0m \033[31mshell-eggs\033[0m \033[31mFAIL:\033[0m %s\n' "$*"; }
+    log()   { printf "%b %b\n" "${C_LIME}${C_BOLD}</> shell-eggs${C_RESET}${C_DIM} ▸${C_RESET}" "$*"; }
+    ok()    { printf "%b %b\n" "${C_LIME}${C_BOLD}</> shell-eggs ✔${C_RESET}" "${C_GREEN}$*${C_RESET}"; }
+    warn()  { printf "%b %b\n" "${C_GOLD}${C_BOLD}</> shell-eggs ⚠${C_RESET}" "${C_YELLOW}$*${C_RESET}"; }
+    error() { printf "%b %b\n" "${C_RED}${C_BOLD}</> shell-eggs ✖${C_RESET}" "${C_RED}$*${C_RESET}"; }
+    info()  { printf "%b %b\n" "${C_CYAN}${C_BOLD}</> shell-eggs ℹ${C_RESET}" "$*"; }
 fi
+fail() { error "$@"; }
 
 # ---------------------------------------------------------------- panel detect
 detect_panel() {

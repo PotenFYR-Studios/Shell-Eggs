@@ -9,6 +9,20 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Slim pull size at the dpkg layer: never unpack man pages, HTML docs,
+# lintian metadata or non-English locales (copyright files, English and the
+# locale alias stay). Applied before every install below; no runtime impact.
+RUN printf '%s\n' \
+    'path-exclude=/usr/share/doc/*' \
+    'path-include=/usr/share/doc/*/copyright' \
+    'path-exclude=/usr/share/man/*' \
+    'path-exclude=/usr/share/info/*' \
+    'path-exclude=/usr/share/lintian/*' \
+    'path-exclude=/usr/share/locale/*' \
+    'path-include=/usr/share/locale/en*' \
+    'path-include=/usr/share/locale/locale.alias' \
+    > /etc/dpkg/dpkg.cfg.d/01-potenfyr-slim
+
 RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
         bash ca-certificates curl wget unzip xz-utils tar gzip procps psmisc \
         net-tools iproute2 iputils-ping dnsutils netcat-openbsd ncat socat \
@@ -18,6 +32,7 @@ RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
         golang-go locales supervisor util-linux login libpam-modules \
         git jq nano vim-tiny less file bsdextrautils sshpass \
     && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /usr/lib/go-*/api /usr/lib/go-*/doc /usr/lib/go-*/test \
     && mkdir -p /run/sshd /home/container
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
@@ -56,7 +71,8 @@ RUN arch=$(dpkg --print-architecture) \
 WORKDIR /home/container
 COPY entrypoint.sh run.sh /usr/local/bin/
 COPY scripts/ /usr/local/bin/scripts/
-RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/run.sh /usr/local/bin/scripts/*.sh \
+RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh /usr/local/bin/run.sh /usr/local/bin/scripts/*.sh 2>/dev/null || true \
+    && chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/run.sh /usr/local/bin/scripts/*.sh \
     && ln -sf /usr/local/bin/entrypoint.sh /entrypoint.sh \
     && ln -sf /usr/local/bin/run.sh /usr/local/bin/scripts/../run.sh 2>/dev/null || true
 

@@ -30,7 +30,7 @@ info() { printf '[info] %s\n' "$*"; }
 error() { printf '[error] %s\n' "$*" >&2; }
 _egg_error_log() { :; }
 
-python tests/extract_funcs.py run.sh > "${SANDBOX}/functions.sh" || exit 1
+python3 tests/extract_funcs.py run.sh > "${SANDBOX}/functions.sh" || exit 1
 # shellcheck disable=SC1090
 source "${SANDBOX}/functions.sh"
 # The protected-path list is a top-level assignment (not a function) - pull it.
@@ -105,6 +105,33 @@ GIT_REPO_URL="file://${REPO}"
 GIT_BRANCH="test"
 sync_git_repo || t_fail "branch switch failed"
 [ -f "${SERVER_DIR}/tools/branch-only.sh" ] && t_pass "branch content synced" || t_fail "branch switch failed"
+
+echo "--- T9: GIT_PRESERVE_ENV keeps live .env credentials across updates ---"
+GIT_BRANCH=""
+mkdir -p "${SERVER_DIR}/tools/app"
+printf 'SHELL_ENV_SECRET=live-secret\n' > "${SERVER_DIR}/.env"
+printf 'TOOL_KEY=live-tool-secret\n' > "${SERVER_DIR}/tools/app/.env"
+commit ".env" "SHELL_ENV_SECRET=repo-override" "c4 repo env"
+commit "tools/app/.env" "TOOL_KEY=repo-tool-override" "c4 tool env"
+sync_git_repo || t_fail ".env update sync failed"
+grep -q "live-secret" "${SERVER_DIR}/.env" && t_pass "root .env preserved (old credentials win)" || t_fail "root .env clobbered"
+grep -q "live-tool-secret" "${SERVER_DIR}/tools/app/.env" && t_pass "sub-path .env restored in its original location" || t_fail "sub-path .env clobbered"
+
+echo "--- T10: GIT_PRESERVE_ENV=0 lets the repository's .env win ---"
+GIT_PRESERVE_ENV=0
+commit "tools/app/.env" "TOOL_KEY=repo-tool-new" "c5 repo env update"
+sync_git_repo || t_fail "opt-out sync failed"
+grep -q "repo-tool-new" "${SERVER_DIR}/tools/app/.env" && t_pass "repo .env wins when opted out" || t_fail "repo .env not applied"
+unset GIT_PRESERVE_ENV
+
+echo "--- T11: GIT_EXCLUDE keeps user paths out of the sync ---"
+GIT_EXCLUDE="tools/keep"
+commit "tools/keep/user.txt" "should-not-land" "c6 excluded"
+commit "tools/app/run.py" "v2-content" "c6 tracked update"
+sync_git_repo || t_fail "exclusion sync failed"
+grep -q "should-not-land" "${SERVER_DIR}/tools/keep/user.txt" && t_fail "GIT_EXCLUDE ignored" || t_pass "excluded path never installed"
+grep -q "v2-content" "${SERVER_DIR}/tools/app/run.py" && t_pass "non-excluded paths still sync" || t_fail "exclusion broke normal sync"
+unset GIT_EXCLUDE
 
 rm -rf "${SANDBOX}"
 echo
