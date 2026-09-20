@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:8b5cf6,50:ec4899,100:f97316&height=220&section=header&text=Shell-Eggs&fontSize=52&fontColor=ffffff&fontAlignY=34&animation=twinkling" width="100%" alt="Shell-Eggs banner"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:8b5cf6,50:ec4899,100:f97316&height=220&section=header&text=Shell-Eggs&fontSize=52&fontColor=ffffff&fontAlignY=34&desc=54%20shells%20%C2%B7%20every%20direction%20%C2%B7%20every%20panel&descSize=18&descAlignY=55&animation=twinkling" width="100%" alt="Shell-Eggs banner"/>
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1200&color=8B5CF6&center=true&vCenter=true&width=800&lines=SSH+with+real+CA+Certificates+and+Hardened+Keys-Only;Bash+Python+PHP+Perl+Ruby+Lua+Node+Go+Java+Reverse+Shells;TLS+and+Covert+Channels+-+Websocket+DNS+ICMP;Bind+Shells+Web+Terminals+and+Debug+Harnesses)](https://github.com/PotenFYR-Studios/Shell-Eggs)
 
@@ -49,6 +49,8 @@
 - [Contributing](#-contributing)
 - [Security & Legal](#%EF%B8%8F-security--legal)
 - [License](#-license)
+- [Connect With Us](#-connect-with-us)
+- [Vision](#-vision)
 
 ---
 
@@ -267,6 +269,23 @@ Built by **[PotenFYR Studios](https://github.com/PotenFYR-Studios)** · [potenfy
 
 ---
 
+## 📫 Connect With Us
+
+<div align="center">
+
+[![GitHub](https://img.shields.io/badge/GitHub-PotenFYR--Studios-181717?style=for-the-badge&logo=github&labelColor=1c1e26)](https://github.com/PotenFYR-Studios)
+[![Website](https://img.shields.io/badge/Website-potenfyr.in-8b5cf6?style=for-the-badge&logo=googlechrome&labelColor=1c1e26)](https://potenfyr.in)
+[![Community](https://img.shields.io/badge/Community-Discord-5865F2?style=for-the-badge&logo=discord&labelColor=1c1e26)](https://discord.com/invite/zUaN2FPBec)
+[![Modrinth](https://img.shields.io/badge/Modrinth-Organization-1bd96a?style=for-the-badge&logo=modrinth&labelColor=1c1e26)](https://modrinth.com/organization/potenfyr)
+
+</div>
+
+## 🎯 Vision
+
+✨ **Versatile** (54 shells, every direction) · 🔐 **Secure** (hardened & CA profiles by default) · 🥚 **Portable** (every panel, plain Docker too) · 🤝 **Community-Focused**
+
+---
+
 ## ⭐ Star History
 
 <picture>
@@ -281,9 +300,9 @@ Every public PotenFYR Studios repository on one live chart, served by [star-hist
 
 <!-- markdownlint-disable -->
 
-### 🌍 PotenFYR Studios Community
+## 👥 Contributors
 
-Contributions make the open-source community such an amazing place to learn, inspire and create. Any contributions you make are **greatly appreciated** - see [CONTRIBUTING.md](CONTRIBUTING.md) and the [good first issues](https://github.com/PotenFYR-Studios/Shell-Eggs/labels/good%20first%20issue). Security concerns: please use [SECURITY.md](SECURITY.md) (private vulnerability reporting), not public issues.
+Contributions are **greatly appreciated** - see [CONTRIBUTING.md](CONTRIBUTING.md) and the [good first issues](https://github.com/PotenFYR-Studios/Shell-Eggs/labels/good%20first%20issue). Security concerns: please use [SECURITY.md](SECURITY.md) (private vulnerability reporting), not public issues.
 
 <a href="https://github.com/PotenFYR-Studios/Shell-Eggs/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=PotenFYR-Studios/Shell-Eggs" alt="Shell-Eggs contributors" />
