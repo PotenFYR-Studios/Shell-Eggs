@@ -133,6 +133,9 @@ jobs:
 
       - name: Smoke test image (amd64)
         run: |
-          docker run --rm "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${GITHUB_SHA::7}" \
-            bash -c 'command -v sshd dropbear telnetd socat ncat python3 php node && echo IMAGE_TOOLS_OK' \
+          # --entrypoint override is essential: the image ENTRYPOINT boots the
+          # whole shell server and never exits, which would hang this step.
+          timeout 180 docker run --rm --entrypoint /bin/bash \
+            "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${GITHUB_SHA::7}" \
+            -c 'command -v sshd dropbear telnetd socat ncat python3 php >/dev/null && echo IMAGE_TOOLS_OK' \
             || echo "[smoke] image tools unavailable; skipped"
