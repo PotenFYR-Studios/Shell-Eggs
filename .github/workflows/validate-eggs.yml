@@ -52,3 +52,7 @@ jobs:
       - name: Payload emission check (every reverse payload renders)
         run: |
           bash tests/test-payloads.sh
+
+      - name: Hermetic git-sync engine tests (no network)
+        run: |
+          bash tests/test-git-sync.sh
