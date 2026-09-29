@@ -206,6 +206,8 @@ Every payload **reconnects forever** and is watched by the supervisor. Each boot
 | `GIT_REPO_URL`, `GIT_BRANCH`, `GIT_TOKEN` | - | sync a git repo (dotfiles, tooling, payloads) into the workspace at boot and on the auto-update poll |
 | `GIT_PRESERVE_ENV` | 1 | every existing `.env` is restored to its original location after each sync, so repo updates can never clobber live credentials (`0` = repo wins) |
 | `GIT_EXCLUDE` | - | glob patterns git sync must never install or overwrite (e.g. `tools/keep/* secrets`) |
+| `GIT_AUTO_UPDATE` | 1 | poll for new commits while the workspace runs; each synced commit is announced in the console (sha + subject + author) (`0` = boot-time sync only) |
+| `GIT_POLL_SECONDS` | 300 | poll interval in seconds for `GIT_AUTO_UPDATE` (30-86400) |
 | `CLI_THEME`, `CLI_BANNER_GRADIENT` | `sh`, `auto` | console cosmetics |
 
 </details>
