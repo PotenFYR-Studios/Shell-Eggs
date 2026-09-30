@@ -18,6 +18,7 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { dirname } from "node:path";
 import { createServer, type ViteDevServer } from "vite";
+import { fileURLToPath } from "node:url";
 
 const SITE = "https://shell-eggs.docs.potenfyr.in";
 
@@ -147,7 +148,7 @@ try {
     ...site.FAMILIES.map((f) => site.familyRoute(f)),
   ];
 
-  const distDir = decodeURIComponent(new URL("../dist", import.meta.url).pathname);
+  const distDir = fileURLToPath(new URL("../dist", import.meta.url));
   const shell = await readFile(`${distDir}/index.html`, "utf8");
   if (!shell.includes('<div id="root"></div>')) {
     throw new Error("root div placeholder not found in dist/index.html");
