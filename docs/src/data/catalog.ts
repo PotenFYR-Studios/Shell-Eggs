@@ -667,6 +667,62 @@ export const EGG_VARIABLES = [
     "description": "1 = check EGG_UPDATE_URL on startup and self-update. 0 = disable the check entirely.",
     "defaultValue": "1",
     "mandatory": false
+  },
+  {
+    "env": "GIT_REPO_URL",
+    "name": "Git Repository URL",
+    "description": "Git repository to sync into the server directory (https GitHub URL or 'owner/repo' shorthand). Keep your own tooling, scripts and dotfiles in git. Leave empty to disable.",
+    "defaultValue": "",
+    "mandatory": false
+  },
+  {
+    "env": "GIT_BRANCH",
+    "name": "Git Branch",
+    "description": "Branch to track from the Git repository (empty = repository default).",
+    "defaultValue": "",
+    "mandatory": false
+  },
+  {
+    "env": "GIT_TOKEN",
+    "name": "Git Token",
+    "description": "Access token for private repositories (admins only). A dead token no longer breaks public repositories - they fall back to anonymous download.",
+    "defaultValue": "",
+    "mandatory": false
+  },
+  {
+    "env": "GIT_ARCHIVE_ON_UPDATE",
+    "name": "Git Archive On Update",
+    "description": "Snapshot previously synced files into ./archive/git-sync/ before applying new commits (1 = Enabled, 0 = Disabled).",
+    "defaultValue": "1",
+    "mandatory": false
+  },
+  {
+    "env": "GIT_PRESERVE_ENV",
+    "name": "Git Preserve .env",
+    "description": "Keep every existing .env in its original location across repo syncs: the old credentials are restored after new GitHub files land, so the project never breaks (1 = Enabled, 0 = let repo .env files win).",
+    "defaultValue": "1",
+    "mandatory": false
+  },
+  {
+    "env": "GIT_EXCLUDE",
+    "name": "Git Exclude Paths",
+    "description": "Space/comma-separated glob patterns git sync must never install or overwrite (e.g. custom/* secrets). Empty = sync everything not protected by the runtime.",
+    "defaultValue": "",
+    "mandatory": false
+  },
+  {
+    "env": "GIT_AUTO_UPDATE",
+    "name": "Git Auto Update",
+    "description": "Poll the repository while the server runs and sync new commits automatically; a console notice tells you when a restart is needed (1 = Enabled, 0 = Disabled).",
+    "defaultValue": "1",
+    "mandatory": false
+  },
+  {
+    "env": "GIT_POLL_SECONDS",
+    "name": "Git Poll Interval",
+    "description": "How often, in seconds, Git Auto Update checks the repository for new commits (30-86400).",
+    "defaultValue": "300",
+    "mandatory": false
   }
 ];
 
