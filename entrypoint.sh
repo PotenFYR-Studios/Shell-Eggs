@@ -14,7 +14,28 @@
 #  expose P_SERVER_* + PeltD stack; bare Docker falls back to hostname shape.
 # ============================================================================
 set -u
-umask 077
+# 022 (org convention): server files stay world-readable so the panel file
+# manager and later non-root starts can read them; 077 hid everything.
+umask 022
+
+# If a panel overrides the image USER and starts the container as root,
+# switch back to the image's dedicated runtime account (uid/gid 988) before
+# touching the server volume: fix ownership while still root, then drop
+# privileges via gosu and re-exec this entrypoint. Root-owned volume files
+# would otherwise break the panel file manager and later non-root starts.
+if [ "$(id -u 2>/dev/null || echo 1)" = "0" ]; then
+    _SH_BOOT_UID="${RUNTIME_UID:-988}"
+    _SH_BOOT_GID="${RUNTIME_GID:-988}"
+
+    for _vol in /home/container /mnt/server; do
+        [ -d "${_vol}" ] && chown -R "${_SH_BOOT_UID}:${_SH_BOOT_GID}" "${_vol}" 2>/dev/null || true
+    done
+    unset _vol
+
+    if command -v gosu >/dev/null 2>&1 && getent passwd "${_SH_BOOT_UID}" >/dev/null 2>&1; then
+        exec gosu "${_SH_BOOT_UID}:${_SH_BOOT_GID}" /entrypoint.sh "$@"
+    fi
+fi
 
 # ---------------------------------------------------------------- constants
 SHELL_EGGS_VERSION="1.0.0"

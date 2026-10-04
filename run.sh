@@ -6,7 +6,8 @@
 #  Exit semantics: only an empty fd3/stdin trigger or SIGTERM/SIGINT exits 0.
 # ============================================================================
 set -u
-umask 077
+# 022 (org convention, matches entrypoint): keeps server files world-readable.
+umask 022
 
 SHELL_EGGS_VERSION="${SHELL_EGGS_VERSION:-1.0.0}"
 export SCRIPTS_DIR="${SCRIPTS_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts}"

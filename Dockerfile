@@ -25,6 +25,7 @@ RUN printf '%s\n' \
 
 RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
         bash ca-certificates curl wget unzip xz-utils tar gzip procps psmisc \
+        gosu \
         net-tools iproute2 iputils-ping dnsutils netcat-openbsd ncat socat \
         nmap openssl openssh-server openssh-sftp-server openssh-client \
         dropbear telnetd inetutils-telnetd busybox mosh tmux screen \
@@ -77,6 +78,9 @@ RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh /usr/local/bin/run.sh /usr/loc
     && ln -sf /usr/local/bin/run.sh /usr/local/bin/scripts/../run.sh 2>/dev/null || true
 
 # Unprivileged-friendly defaults; panels run this as root anyway.
-RUN useradd -m -s /bin/bash container 2>/dev/null || true
+# uid/gid 988: matches the org-wide convention (Database-Eggs, Prog-Language-Eggs,
+# Minecraft-Eggs) so root-bootstrapped panels can chown the volume and drop.
+RUN groupadd -g 988 container 2>/dev/null || true \
+    && useradd -m -u 988 -g 988 -s /bin/bash container 2>/dev/null || true
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
