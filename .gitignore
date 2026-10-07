@@ -30,3 +30,6 @@ Thumbs.db
 CLAUDE.md
 .rtk
 .plan
+
+# SSH host keys (never track these)
+.ssh-host/
