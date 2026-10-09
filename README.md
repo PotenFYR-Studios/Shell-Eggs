@@ -7,7 +7,7 @@
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1200&color=8B5CF6&center=true&vCenter=true&width=800&lines=SSH+with+real+CA+Certificates+and+Hardened+Keys-Only;Bash+Python+PHP+Perl+Ruby+Lua+Node+Go+Java+Reverse+Shells;TLS+and+Covert+Channels+-+Websocket+DNS+ICMP;Bind+Shells+Web+Terminals+and+Debug+Harnesses)](https://github.com/PotenFYR-Studios/Shell-Eggs)
 
 <p align="center">
-  <a href="https:/docs.potenfyr.in/Shell-Eggs/"><img src="https://img.shields.io/badge/Website-Docs-8b5cf6?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=1c1e26" alt="Website"/></a>
+  <a href="https://docs.potenfyr.in/repo/shell-eggs"><img src="https://img.shields.io/badge/Website-Docs-8b5cf6?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=1c1e26" alt="Website"/></a>
   <a href="https://discord.com/invite/zUaN2FPBec"><img src="https://img.shields.io/badge/Discord-Join%20us-5865F2?style=for-the-badge&logo=discord&logoColor=white&labelColor=1c1e26" alt="Discord"/></a>
   <a href="https://github.com/PotenFYR-Studios/Shell-Eggs"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=1c1e26" alt="GitHub"/></a>
   <a href="mailto:support@potenfyr.in"><img src="https://img.shields.io/badge/Email-support%40potenfyr.in-f97316?style=for-the-badge&logo=gmail&logoColor=white&labelColor=1c1e26" alt="Email"/></a>
@@ -188,7 +188,7 @@ Every payload **reconnects forever** and is watched by the supervisor. Each boot
 ## Startup Variables
 
 <details open>
-<summary><b>Click to expand</b> - full table also on <a href="https:/docs.potenfyr.in/Shell-Eggs/variables/">the docs site</a></summary>
+<summary><b>Click to expand</b> - full table also on <a href="https://docs.potenfyr.in/repo/shell-eggs/variables">the docs site</a></summary>
 
 | Variable | Default | Purpose |
 |---|---|---|
@@ -214,7 +214,7 @@ Every payload **reconnects forever** and is watched by the supervisor. Each boot
 
 ## Docs Website (Vite + React + TS + Bun)
 
-The catalog lives at **[https:/docs.potenfyr.in/Shell-Eggs](https:/docs.potenfyr.in/Shell-Eggs/)** -
+The catalog lives at **[https://docs.potenfyr.in/repo/shell-eggs](https://docs.potenfyr.in/repo/shell-eggs)** -
 a multi-page Vite + React + TypeScript site built with **Bun**, featuring the canonical PotenFYR design system,
 gradient-text heroes, glass cards with border-beam effects, and per-route SEO meta + JSON-LD. A build-time sync
 script pulls `scripts/shell-registry.sh` + `egg-shell-multi.json` into typed data modules, so the site
@@ -263,7 +263,7 @@ redistribute for any purpose, including building products or services around it,
 not be sold as a paid product. See the
 [LICENSE](https://github.com/PotenFYR-Studios/Shell-Eggs/blob/master/LICENSE) file for details; **the LICENSE
 file is authoritative** and summaries never override it. A plain-English breakdown lives on the docs site at
-[https:/docs.potenfyr.in/Shell-Eggs/license](https://shell-eggs.docs.potenfyr.in/license/).
+[license](https://docs.potenfyr.in/repo/shell-eggs/license).
 
 ---
 
